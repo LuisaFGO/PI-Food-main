@@ -9,21 +9,25 @@ module.exports = (sequelize) => {
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-    name: {
+    nombre: {
       type: DataTypes.STRING,
       allowNull: false,
     },
     imagen:{
       type: DataTypes.STRING,
+      allowNull: false,
     },
     resumen:{
       type: DataTypes.STRING,
+      allowNull: false,
     },
     healthScore:{
       type: DataTypes.FLOAT,
+      allowNull: false,
     },
     steps:{
       type: DataTypes.TEXT,
+      allowNull: false,
     },
   },
   {
