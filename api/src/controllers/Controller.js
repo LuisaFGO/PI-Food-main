@@ -13,10 +13,6 @@ const getApiInfo= async () =>{
             name: recipe.name,
             image: recipe.image.url,
             resumen: recipe.title,
-            //weight_min: parseInt(recipe.weight.metric.slice(0, 2).trim()),
-            //weight_max: parseInt(recipe.weight.metric.slice(4).trim()),
-            //height_min: parseInt(recipe.height.metric.slice(0, 2).trim()),
-            //height_max: parseInt(recipe.height.metric.slice(4).trim()),
         }
     })
     return apiInfo
@@ -46,6 +42,19 @@ const getDbInfo = async ()=>{
 const createPost = async (nombre, imagen, resumen, healthScore, steps) => {
     return await Recipe.create({nombre, imagen, resumen, healthScore, steps})
 }
+
+//const getById = async (id, source) =>{
+  //const receta = source === "api" 
+  //? (await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}/${id}`))
+    //.data.results 
+  //: await Recipe.findByPk(id);
+  //return receta;
+  //if(source === "api"){
+    //const apiUrl= await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}/${id}`);
+    //const apiInfo= await apiUrl.data.results.findByPK(id);
+    //return apiInfo;
+  //}
+//}
 
 module.exports = {
     getAllRecipe,
