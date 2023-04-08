@@ -22,11 +22,11 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     healthScore:{
-      type: DataTypes.FLOAT,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     steps:{
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
       allowNull: false,
     },
   },

@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { getAllRecipe, createPost } = require('../controllers/Controller.js')
+const { getAllRecipe, createPost, getAllDiets, getDiet } = require('../controllers/Controller.js')
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
@@ -28,10 +28,10 @@ router.get('/recipes/:id', async (req, res) =>{
 });
 
 router.get('/recipes', async (req,res)=>{
-    const name = req.query.name;
+    const nombre = req.query.nombre;
     let recipeTotal= await getAllRecipe();
-      if(name){
-        let recipeName= await recipeTotal.filter(recipe => recipe.name.toLowerCase().includes(name.toLowerCase())) 
+      if(nombre){
+        let recipeName= await recipeTotal.filter(recipe => recipe.nombre.toLowerCase().includes(nombre.toLowerCase())) 
         recipeName.length ? //si existe, porque tiene algo-- entonces->
         res.status(200).send(recipeName) : res.status(404).send('Not found or recipe not exist 😥') // trae una receta especificamente.
       }else{
@@ -40,15 +40,23 @@ router.get('/recipes', async (req,res)=>{
 })
 
 router.post('/recipes', async (req, res) => {
-    let {nombre, imagen, resumen, healthScore, steps} = req.body;
+    let {nombre, imagen, diets, resumen, healthScore, steps} = req.body;
    try {
-     let response = await createPost(nombre, imagen, resumen, healthScore, steps);
+     let response = await createPost(nombre, imagen, diets, resumen, healthScore, steps);
      res.status(200).json(response);
    } catch (error) {
      res.status(400).json({error: error.message});
    }
 })
 
-router.get('/diets')
+router.get('/diets', async (req, res) => {
+  try {
+    const diet = await getDiet();
+    res.json(diet);
+  } catch (error) {
+    res.status(400).json({error: error.message});
+  }
+}
+)
 
 module.exports = router;

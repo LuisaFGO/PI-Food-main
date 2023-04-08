@@ -5,14 +5,21 @@ const { Recipe, Diets } = require('../db')
 
 //Traigo info de la api
 const getApiInfo= async () =>{
-    const apiUrl= await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}`);
+    const apiUrl= await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=15`);
     //tarea: hacer un validador
     const apiInfo= await apiUrl.data.results.map(recipe =>{
         return {
             id: recipe.id,
-            name: recipe.name,
+            nombre: recipe.title,
             image: recipe.image.url,
-            resumen: recipe.title,
+            diets: recipe.diets,
+            resumen: recipe.summary,
+            healthScore: recipe.healthScore,
+            steps: recipe.analyzedInstructions[0]?.steps.map(recipe => {
+                return {
+                    number: recipe.number,
+                    step: recipe.step
+                }})
         }
     })
     return apiInfo
@@ -39,9 +46,29 @@ const getDbInfo = async ()=>{
     return infoTotal
 }
 
-const createPost = async (nombre, imagen, resumen, healthScore, steps) => {
-    return await Recipe.create({nombre, imagen, resumen, healthScore, steps})
+const createPost = async (nombre, imagen, diets, resumen, healthScore, steps) => {
+    const newRecipe = await Recipe.create({nombre, imagen, resumen, healthScore, steps});
+    let dietRecipeDb = await Diets.findAll({
+      where: {nombre: diets}
+  })
+  newRecipe.addDiet(dietRecipeDb);
 }
+
+
+const getDiet =async() =>{
+const diets = ['gluten free', 'ketogenic', 'vegetarian', 'lacto vegetarian','ovo vegetarian', 'lacto ovo vegetarian', 'vegan', 'pescetarian', 'paleolithic', 'primal', 'low fodmap', 'whole 30', 'dairy free'];
+//const apiUrl= await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipesInformation=true&number=15`);
+//const allDiets= await apiUrl.data.results.map(d => {return {diets: d.diets}});
+diets.forEach(d => {
+  Diets.findOrCreate({
+      where: { nombre: d}
+  })
+})
+const dietTypes = await Diets.findAll();
+return dietTypes;
+};
+
+
 
 //const getById = async (id, source) =>{
   //const receta = source === "api" 
@@ -59,4 +86,5 @@ const createPost = async (nombre, imagen, resumen, healthScore, steps) => {
 module.exports = {
     getAllRecipe,
     createPost,
+    getDiet,
 }
