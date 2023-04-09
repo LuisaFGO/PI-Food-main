@@ -1,10 +1,22 @@
+import { Route, BrowserRouter, Switch} from "react-router-dom";
+
+import Home from "./views/home/home.component";
+import Create from "./views/create/create.component";
+import Detail from "./views/detail/detail.component";
+
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <h1>Henry Food</h1>
-    </div>
+    <BrowserRouter>
+      <div>
+        < Switch>
+          < Route exact path= "/home" component={Home} />
+          < Route path="/home/:id" component={Detail} />
+          < Route path="/create" component={Create} />
+        </Switch>
+      </div>
+    </BrowserRouter>
   );
 }
 
