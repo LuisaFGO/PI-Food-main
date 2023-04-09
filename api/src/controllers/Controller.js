@@ -5,7 +5,7 @@ const { Recipe, Diets } = require('../db')
 
 //Traigo info de la api
 const getApiInfo= async () =>{
-    const apiUrl= await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=15`);
+    const apiUrl= await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=100`);
     //tarea: hacer un validador
     const apiInfo= await apiUrl.data.results.map(recipe =>{
         return {
@@ -56,10 +56,10 @@ const createPost = async (nombre, imagen, diets, resumen, healthScore, steps) =>
 
 
 const getDiet =async() =>{
-const diets = ['gluten free', 'ketogenic', 'vegetarian', 'lacto vegetarian','ovo vegetarian', 'lacto ovo vegetarian', 'vegan', 'pescetarian', 'paleolithic', 'primal', 'low fodmap', 'whole 30', 'dairy free'];
+const allDiets = ['gluten free', 'ketogenic', 'vegetarian', 'lacto vegetarian','ovo vegetarian', 'lacto ovo vegetarian', 'vegan', 'pescetarian', 'paleolithic', 'primal', 'low fodmap', 'whole 30', 'dairy free'];
 //const apiUrl= await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipesInformation=true&number=15`);
 //const allDiets= await apiUrl.data.results.map(d => {return {diets: d.diets}});
-diets.forEach(d => {
+allDiets.forEach(d => {
   Diets.findOrCreate({
       where: { nombre: d}
   })
