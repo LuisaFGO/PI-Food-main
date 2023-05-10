@@ -11,7 +11,7 @@ const getApiInfo= async () =>{
         return {
             id: recipe.id,
             nombre: recipe.title,
-            image: recipe.image.url,
+            image: recipe.image,
             diets: recipe.diets,
             resumen: recipe.summary,
             healthScore: recipe.healthScore,

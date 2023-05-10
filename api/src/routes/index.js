@@ -1,5 +1,7 @@
 const { Router } = require('express');
 const { getAllRecipe, createPost, getDiet } = require('../controllers/Controller.js')
+const { API_KEY } = process.env;
+const axios = require('axios');
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
@@ -26,6 +28,16 @@ router.get('/recipes/:id', async (req, res) =>{
             res.status(404).send('Not found or does not exist 😥')
         }
 });
+
+router.get('/test', async(req, res)=>{
+  console.log(API_KEY);
+  try {
+    const api = axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=100`);
+    res.json(api);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+})
 
 router.get('/recipes', async (req,res)=>{
     const nombre = req.query.nombre;

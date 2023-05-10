@@ -19,10 +19,24 @@
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
+const Diets = require('./src/models/Diets.js')
 
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
   server.listen(3001, () => {
     console.log('%s listening at 3001'); // eslint-disable-line no-console
   });
+  // let diets = ['Whole30', 'Low FODMAP', 'Primal', 'Paleo', 'Pescetarian', 'Vegan', 'Ovo Vegetarian', 'Lacto Vegetarian', 'Vegetarian', 'Ketogenic', 'Gluten Free'];
+  
+  // diets = diets.map(x  => {
+  //   Diets.create({
+  //     name: x
+  //   });
+  // });
+
+  // Promise.all(diets)
+  //   .then(response => console.log('Datos cargados correctamente'))
+  //   .catch(error => console.log(error));
 });
+
+
