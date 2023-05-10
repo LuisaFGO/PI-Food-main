@@ -5,8 +5,8 @@ import './home.styles.css';
 
 function Home() {
   return (
-    <div>
-      <h1>Homeeee</h1>
+    <div className='home'>
+      <h2 className='home-title'>Home</h2>
       < Navbar />
       < Cards />
     </div>
